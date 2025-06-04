@@ -13,11 +13,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   type TextInput,
+  Image,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Banner from '~/components/core/Banner';
 import Button from '~/components/core/Button';
 import Input from '~/components/core/Input';
+import { SafeAreaView } from '~/components/core/SafeAreaView';
 import axiosInstance from '~/config/axiosConfig';
 
 export default function SignUpForm() {
@@ -86,13 +87,10 @@ export default function SignUpForm() {
   const validatePassword = (text: string) => {
     updateField('password', text);
     if (!text) {
-      setFieldError('password', 'Password is required');
+      setFieldError('password', 'Password tidak boleh kosong');
       return false;
     } else if (text.length < 8) {
-      setFieldError('password', 'Password must be at least 8 characters');
-      return false;
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(text)) {
-      setFieldError('password', 'Password must contain uppercase, lowercase, and number');
+      setFieldError('password', 'Password minimal 8 karakter');
       return false;
     } else {
       setFieldError('password', '');
@@ -106,10 +104,10 @@ export default function SignUpForm() {
   const validateConfirmPassword = (text: string, pass = data.password) => {
     updateField('password_confirmation', text);
     if (!text) {
-      setFieldError('password_confirmation', 'Please confirm your password');
+      setFieldError('password_confirmation', 'Harap konfirmasi password anda');
       return false;
     } else if (text !== pass) {
-      setFieldError('password_confirmation', 'Passwords do not match');
+      setFieldError('password_confirmation', 'Password tidak cocok');
       return false;
     } else {
       setFieldError('password_confirmation', '');
@@ -141,15 +139,14 @@ export default function SignUpForm() {
 
     try {
       await axiosInstance.post('/register', data);
-      // await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log('Sign up successful', data);
 
       // Reset
       resetForm();
       setSuccessMessage(
-        'Account created successfully! Please check your email to verify your account'
+        'Akun berhasil dibuat. Silakan cek inbox email anda dan lakukan verifikasi'
       );
     } catch (error) {
+      // eslint-disable-next-line import/no-named-as-default-member
       if (axios.isAxiosError(error)) {
         const responseData = error.response?.data;
         if (responseData?.errors) {
@@ -192,16 +189,19 @@ export default function SignUpForm() {
       className="flex-1">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView contentContainerClassName="flex-grow" keyboardShouldPersistTaps="handled">
-          <SafeAreaView className="flex-1 bg-white">
-            <View className="flex-1 p-6">
+          <SafeAreaView>
+            <View className="flex-1 justify-center p-6">
               {/* Header */}
               <View className="mb-6 items-center">
-                <View className="mb-3 h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-                  {/* Replace with your actual logo */}
-                  <Text className="text-2xl font-bold text-blue-600">A</Text>
-                </View>
-                <Text className="text-2xl font-bold text-gray-800">Create Account</Text>
-                <Text className="mt-1 text-center text-gray-500">Sign up to get started</Text>
+                <Image
+                  className="mb-4 h-28 w-52"
+                  resizeMode="contain"
+                  source={require('assets/logo-horizontal.png')}
+                />
+                <Text className="text-3xl font-bold text-gray-800">Buat Akun</Text>
+                <Text className="mt-1 text-center text-gray-500">
+                  Daftarkan akun mu untuk memulai
+                </Text>
               </View>
 
               {/* Form */}
@@ -213,13 +213,13 @@ export default function SignUpForm() {
                 ) : null}
 
                 <Input
-                  label="Full Name"
+                  label="Nama Lengkap"
                   value={data.name}
                   onChangeText={(text) => {
                     updateField('name', text);
                     if (errors.name) validateFullName(text);
                   }}
-                  placeholder="Enter your full name"
+                  placeholder="Masukkan nama lengkap"
                   error={errors.name}
                   returnKeyType="next"
                   onSubmitEditing={() => emailRef.current?.focus()}
@@ -234,7 +234,7 @@ export default function SignUpForm() {
                     updateField('email', text);
                     if (errors.email) validateEmail(text);
                   }}
-                  placeholder="Enter your email"
+                  placeholder="Masukkan email"
                   keyboardType="email-address"
                   autoCapitalize="none"
                   error={errors.email}
@@ -251,7 +251,7 @@ export default function SignUpForm() {
                     updateField('password', text);
                     if (errors.password) validatePassword(text);
                   }}
-                  placeholder="Create a password"
+                  placeholder="Buat password"
                   secureTextEntry
                   error={errors.password}
                   returnKeyType="next"
@@ -261,13 +261,13 @@ export default function SignUpForm() {
 
                 <Input
                   ref={confirmPasswordRef}
-                  label="Confirm Password"
+                  label="Konfirmasi Password"
                   value={data.password_confirmation}
                   onChangeText={(text) => {
                     updateField('password_confirmation', text);
                     if (errors.password_confirmation) validateConfirmPassword(text);
                   }}
-                  placeholder="Confirm your password"
+                  placeholder="Konfirmasi password anda"
                   secureTextEntry
                   error={errors.password_confirmation}
                   returnKeyType="next"
@@ -286,12 +286,12 @@ export default function SignUpForm() {
 
               {/* Sign In Link */}
               <View className="mt-6 flex-row justify-center">
-                <Text className="text-gray-600">Already have an account? </Text>
+                <Text className="text-gray-600">Sudah punya akun? </Text>
                 <TouchableOpacity
                   onPress={() => {
                     router.push('/sign-in');
                   }}>
-                  <Text className="font-medium text-blue-600">Sign In</Text>
+                  <Text className="font-medium text-blue-600">Masuk</Text>
                 </TouchableOpacity>
               </View>
             </View>

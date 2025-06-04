@@ -1,47 +1,8 @@
 'use client';
 
 import { Tabs } from 'expo-router';
-import {
-  Home,
-  ClipboardCheck,
-  BookOpen,
-  Bell,
-  User,
-  Hand,
-  HandHeart,
-  AlertTriangle,
-  User2,
-} from 'lucide-react-native';
-import { View } from 'react-native';
-import colors from '~/lib/color';
-
-// Define tab configuration
-export const tabConfig = [
-  {
-    name: 'index',
-    label: 'Home',
-    icon: Home,
-    color: colors.primary,
-  },
-  {
-    name: 'compliance',
-    label: 'Compliance',
-    icon: ClipboardCheck,
-    color: colors.success,
-  },
-  {
-    name: 'education',
-    label: 'Education',
-    icon: BookOpen,
-    color: colors.warning,
-  },
-  {
-    name: 'profile',
-    label: 'Profile',
-    icon: User,
-    color: colors.secondary,
-  },
-];
+import { Home, HandHeart, AlertTriangle, User2 } from 'lucide-react-native';
+import { colors } from '~/lib/color';
 
 export default function TabsLayout() {
   return (

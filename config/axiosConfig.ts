@@ -1,13 +1,13 @@
 import axios from 'axios'
-import { API_BASE_URL } from './env'
 import * as SecureStore from 'expo-secure-store'
 const axiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: process.env.EXPO_PUBLIC_API_BASE_URL,
   headers:{
     'Content-Type':'application/json',
     'Accept':'application/json'
   },
-  withCredentials:false
+  withCredentials:false,
+  timeout:30000
 })
 
 axiosInstance.interceptors.request.use(

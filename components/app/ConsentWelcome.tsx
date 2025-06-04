@@ -1,15 +1,31 @@
+import { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
-import StatusBadge from '../core/StatusBadge';
 
-interface ConsentWelcomeProps {
-  userName: string | undefined;
-  complianceStatus: 'compliant' | 'pending' | 'attention' | 'overdue';
-}
+type ConsentWelcomeProps = {
+  userName?: string;
+};
 
-export default function ConsentWelcome({ userName, complianceStatus }: ConsentWelcomeProps) {
+const quotes = [
+  '“Pengaduan Anda adalah langkah pertama menuju pelayanan publik yang lebih baik.”',
+  '“Setiap suara dihitung. Terima kasih telah peduli!”',
+  '“Perubahan dimulai dari keberanian menyampaikan.”',
+  '“Pelayanan yang baik lahir dari masukan yang jujur.”',
+  '“Kami mendengar, kami bertindak. Terima kasih atas pengaduan Anda.”',
+];
+
+export default function ConsentWelcome({ userName }: ConsentWelcomeProps) {
+  const [quote, setQuote] = useState('');
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    setQuote(quotes[randomIndex]);
+  }, []);
+
   return (
-    <View className="px-5 pb-6 pt-4">
-      <Text className="mb-1 text-2xl font-semibold text-gray-900">Hello, {userName}</Text>
+    <View className="px-5 pb-6 pt-10">
+      <Text className="mb-1 text-3xl font-bold text-gray-900">Selamat datang, {userName} 👋</Text>
+
+      {quote && <Text className="mt-4 italic text-gray-500">{quote}</Text>}
     </View>
   );
 }

@@ -3,6 +3,8 @@ import { Card, CardImage } from '../core/Card';
 import { formatDistanceToNow } from '../../lib/date';
 import PostTypeBadge from './PostTypeBadge';
 import { Content } from '~/config/types';
+import { router } from 'expo-router';
+import { trimText } from '~/lib/utils';
 
 interface ServicePostItemProps {
   post: Content;
@@ -14,7 +16,12 @@ export default function ServicePostItem({ post, simple }: ServicePostItemProps) 
 
   return (
     <Pressable
-      onPress={() => console.log(`Navigate to post ${post.id}`)}
+      onPress={() =>
+        router.push({
+          pathname: '/pelayanan/[id]',
+          params: { id: post.id },
+        })
+      }
       className={simple ? 'mb-4' : 'mb-2 mr-4'}>
       <Card className={simple ? 'w-full' : 'w-[280px]'} elevation="small">
         {!simple && post.image_url && (
@@ -33,7 +40,7 @@ export default function ServicePostItem({ post, simple }: ServicePostItemProps) 
           </View>
           <Text className="mb-1 text-base font-semibold text-gray-900">{post.title}</Text>
           <Text className="text-sm text-gray-600" numberOfLines={2}>
-            {post.created_by}
+            {trimText(post.description, 50)}
           </Text>
         </View>
       </Card>

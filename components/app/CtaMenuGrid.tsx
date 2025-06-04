@@ -1,45 +1,15 @@
 import { View } from 'react-native';
-import {
-  FileText,
-  ClipboardCheck,
-  BookOpen,
-  Bell,
-  Settings,
-  HandHeart,
-  AlertTriangle,
-} from 'lucide-react-native';
-import colors from '~/lib/color';
 import MenuButton from '../core/MenuButton';
+import { MenuItem } from '~/config/types';
+import { router } from 'expo-router';
 
-export default function CTAMenuGrid() {
-  const menuItems = [
-    {
-      id: 'pelayanan',
-      title: 'Pelayanan',
-      icon: <HandHeart size={70} color={colors.success} />,
-      bgColor: 'bg-green-50',
-      route: '/pelayanan',
-      textColor: 'text-emerald-600',
-    },
-    {
-      id: 'pengaduan',
-      title: 'Pengaduan',
-      icon: <AlertTriangle size={70} color={colors.danger} />,
-      bgColor: 'bg-red-50',
-      route: '/education',
-      textColor: 'text-rose-600',
-    },
-    {
-      id: 'settings',
-      title: 'Settings',
-      icon: <Settings size={70} color={colors.palette.gray['700']} />,
-      bgColor: 'bg-gray-100',
-      route: '/settings',
-    },
-  ];
+interface MenuItemProps {
+  menuItems: MenuItem[];
+}
 
+export default function CTAMenuGrid({ menuItems }: MenuItemProps) {
   return (
-    <View className="flex-row flex-wrap justify-between">
+    <View className="flex-row flex-wrap justify-between gap-3">
       {menuItems.map((item) => (
         <MenuButton
           key={item.id}
@@ -47,7 +17,7 @@ export default function CTAMenuGrid() {
           icon={item.icon}
           bgColor={item.bgColor}
           textColor={item.textColor}
-          onPress={() => console.log(`Navigate to ${item.route}`)}
+          onPress={() => router.push(item.route)}
         />
       ))}
     </View>

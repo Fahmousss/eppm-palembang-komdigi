@@ -22,7 +22,7 @@ export default function MenuButton({
       activeOpacity={0.7}
       onPress={onPress}
       className={cn(
-        'relative mb-3 h-20 w-[31%] items-center justify-center overflow-hidden rounded-xl',
+        'relative mb-3 h-20 w-[31%] grow items-center justify-center overflow-hidden rounded-xl',
         bgColor
       )}
       style={{

@@ -1,0 +1,36 @@
+{
+  "cli": {
+    "version": ">= 16.7.2",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "API_BASE_URL": "http://eppmkomdigi.fahmousss.xyz/api",
+        "BASE_URL": "http://eppmkomdigi.fahmousss.xyz/"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "API_BASE_URL": "http://eppmkomdigi.fahmousss.xyz/api",
+        "BASE_URL": "http://eppmkomdigi.fahmousss.xyz/"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "API_BASE_URL": "http://eppmkomdigi.fahmousss.xyz/api",
+        "BASE_URL": "http://eppmkomdigi.fahmousss.xyz/"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

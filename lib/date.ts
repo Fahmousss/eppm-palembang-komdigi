@@ -35,6 +35,13 @@ export function formatDistanceToNow(date: Date): string {
   }
 
   // Format as date
+  return formatDate(date)
+}
+
+/**
+ * Format a date to a standard format
+ */
+export function formatDate(date: Date): string {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "short",

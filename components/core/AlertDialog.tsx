@@ -33,7 +33,7 @@ export default function AlertDialog({
   visible,
   title,
   message,
-  buttons = [{ text: 'OK' }],
+  buttons = [{ text: 'Ok' }],
   onDismiss,
   cancelable = true,
 }: AlertDialogProps) {

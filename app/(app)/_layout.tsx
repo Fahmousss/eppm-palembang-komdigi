@@ -1,10 +1,9 @@
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import React from 'react';
-import { Redirect, Slot, Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { useSession } from '~/context/AuthContext';
 import { AlertDialogProvider } from '~/components/core/AlertDialogProvider';
 import { colors } from '~/lib/color';
-import { AppDataProvider } from '~/context/AppDataContext';
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
@@ -22,26 +21,52 @@ export default function AppLayout() {
   }
 
   return (
-    <AppDataProvider>
-      <AlertDialogProvider>
-        <Stack
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: colors.semantic.light.background.primary,
-            },
-            headerShadowVisible: false,
-            contentStyle: {
-              backgroundColor: colors.semantic.light.background.primary,
-            },
-          }}>
-          <Stack.Screen
-            name="(tabs)"
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack>
-      </AlertDialogProvider>
-    </AppDataProvider>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: colors.semantic.light.background.primary,
+        },
+        headerShadowVisible: false,
+        contentStyle: {
+          backgroundColor: colors.semantic.light.background.primary,
+        },
+      }}>
+      <Stack.Screen
+        name="(tabs)"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="pelayanan/[id]"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="pengaduan/new"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="pengaduan/pengaduan-saya"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="pengaduan/bantuan"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="pengaduan/[id]"
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack>
   );
 }

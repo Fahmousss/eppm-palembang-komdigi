@@ -12,6 +12,7 @@ export interface InputProps extends Omit<TextInputProps, 'style'> {
   onChangeText?: (text: string) => void;
   error?: string;
   label?: string;
+  required?: boolean;
   className?: string;
   inputClassName?: string;
   errorClassName?: string;
@@ -32,6 +33,7 @@ const Input = forwardRef<TextInput, InputProps>(
       inputClassName,
       errorClassName,
       labelClassName,
+      required = false,
       ...props
     },
     ref
@@ -62,6 +64,7 @@ const Input = forwardRef<TextInput, InputProps>(
               labelClassName
             )}>
             {label}
+            {required && <Text className="text-red-500">*</Text>}
           </Text>
         )}
 

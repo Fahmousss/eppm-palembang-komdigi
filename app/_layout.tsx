@@ -1,9 +1,12 @@
 import { SessionProvider, useSession } from '~/context/AuthContext';
 import '../global.css';
 
-import { Redirect, Slot, Stack } from 'expo-router';
+import { Redirect, Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import colors from '~/lib/color';
+import { colors } from '~/lib/color';
+import 'expo-dev-client';
+import { AppDataProvider } from '~/context/AppDataContext';
+import { AlertDialogProvider } from '~/components/core/AlertDialogProvider';
 
 function Header() {
   const { session, isLoading } = useSession();
@@ -22,9 +25,13 @@ function Header() {
 
 export default function RootLayout() {
   return (
-    <SessionProvider>
-      <Header />
-      <Slot />
-    </SessionProvider>
+    <AppDataProvider>
+      <AlertDialogProvider>
+        <SessionProvider>
+          <Header />
+          <Slot />
+        </SessionProvider>
+      </AlertDialogProvider>
+    </AppDataProvider>
   );
 }

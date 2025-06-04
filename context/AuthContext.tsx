@@ -3,14 +3,8 @@ import { router } from 'expo-router';
 import { createContext, type PropsWithChildren, useContext, useEffect } from 'react';
 import axiosInstance from '~/config/axiosConfig';
 import { useStorageState } from '~/hooks/useStorageState';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  email_verified_at: string | null;
-  role: string;
-}
+import { useAlert } from '~/components/core/AlertDialogProvider';
+import { User } from '~/config/types';
 
 interface AuthContextType {
   signIn: (token: string, user: User) => void;
@@ -41,6 +35,7 @@ export function useSession() {
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
+  // const { alert } = useAlert();
   const [[isLoading, session], setSession] = useStorageState('session');
   const [[, user], setUser] = useStorageState('user');
   const updateUser = async (userData: any) => {
@@ -60,7 +55,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
         router.replace('/sign-in');
       }
     } catch (error) {
-      console.log('Logout error, ', error);
+      await alert({ title: 'Logout gagal' });
     }
   };
   const loadUserInfo = async (token: string) => {

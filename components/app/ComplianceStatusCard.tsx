@@ -2,7 +2,7 @@ import { Text } from 'react-native';
 import { Card, CardBody, CardHeader } from '../core/Card';
 import { formatDistanceToNow } from '~/lib/date';
 import { CheckCircle, AlertCircle, Clock, AlertTriangle } from 'lucide-react-native';
-import colors from '~/lib/color';
+import { colors } from '~/lib/color';
 
 interface ComplianceStatusCardProps {
   status: 'compliant' | 'pending' | 'attention' | 'overdue';

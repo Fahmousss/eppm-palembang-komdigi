@@ -1,27 +1,31 @@
-import {
-  BadgeCheck,
-  BadgeInfo,
-  BadgeX,
-  Check,
-  CheckCircle2,
-  Info,
-  XCircle,
-} from 'lucide-react-native';
+import { BadgeCheck, BadgeX, BadgeInfo, TriangleAlert } from 'lucide-react-native';
 import React from 'react';
 import { View, Text } from 'react-native';
 import { cn } from '~/lib/utils';
+import Button, { ButtonVariant } from './Button';
 
 type BannerVariant = 'success' | 'error' | 'info' | 'warning';
 
 type BannerProps = {
+  title?: string;
   message: string;
   variant?: BannerVariant;
+  action?: () => void;
+  actionLabel?: string;
+  buttonVariant?: ButtonVariant;
 };
 
-const Banner: React.FC<BannerProps> = ({ message, variant = 'info' }) => {
+const Banner: React.FC<BannerProps> = ({
+  title,
+  message,
+  variant = 'info',
+  action,
+  actionLabel = 'Action',
+  buttonVariant = 'primary',
+}) => {
   if (!message) return null;
 
-  // Map variant to specific styles
+  // Map banner variant to styles
   const variantStyles = {
     success: {
       container: 'bg-green-50 border-green-200 text-green-600',
@@ -43,14 +47,36 @@ const Banner: React.FC<BannerProps> = ({ message, variant = 'info' }) => {
 
   const styles = variantStyles[variant];
 
-  // Use cn utility function to merge classNames
+  const renderIcon = () => {
+    switch (variant) {
+      case 'success':
+        return <BadgeCheck color="green" size={20} />;
+      case 'error':
+        return <BadgeX color="red" size={20} />;
+      case 'warning':
+        return <TriangleAlert color="orange" size={20} />;
+      default:
+        return <BadgeInfo color="blue" size={20} />;
+    }
+  };
+
   return (
-    <View className={cn('mb-4 flex-row gap-2 rounded-md border p-3', styles.container)}>
-      {variant === 'success' && <BadgeCheck color="green" size={20} />}
-      {variant === 'error' && <BadgeX color="red" size={20} />}
-      {variant === 'info' && <BadgeInfo color={'blue'} size={20} />}
-      {variant === 'warning' && <BadgeInfo color={'orange'} size={20} />}
-      <Text className={cn('text-sm', styles.icon)}>{message}</Text>
+    <View
+      className={cn(
+        'mb-4 items-start justify-between gap-3 rounded-md border p-3',
+        styles.container
+      )}>
+      <View className="flex-1 flex-row items-center gap-2">
+        {renderIcon()}
+        <View>
+          {title && <Text className={cn('flex-1 font-bold', styles.icon)}>{title}</Text>}
+          <Text className={cn('flex-1 text-sm', styles.icon)}>{message}</Text>
+        </View>
+      </View>
+
+      {action && (
+        <Button size={'small'} variant={buttonVariant} title={actionLabel} onPress={action} />
+      )}
     </View>
   );
 };
