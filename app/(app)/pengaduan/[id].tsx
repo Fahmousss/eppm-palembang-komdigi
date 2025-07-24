@@ -342,9 +342,135 @@ export default function ComplaintDetailScreen() {
 
           {/* Admin Notes (if any) */}
           {complaint.response && (
-            <View className="mb-4 rounded-lg bg-blue-50 p-3">
-              <Text className="mb-1 text-sm font-semibold text-gray-900">Catatan Admin</Text>
-              <Text className="text-sm text-gray-700">{complaint.response}</Text>
+            <View className="mb-4">
+              <Text className="mb-3 text-base font-semibold text-gray-900">Status Timeline</Text>
+              <View className="ml-2">
+                {/* Timeline items */}
+                <View className="flex-row">
+                  {/* Timeline line container */}
+                  <View className="mr-4 items-center">
+                    {/* First circle - Menunggu */}
+                    <View
+                      className={`h-4 w-4 rounded-full border-2 ${
+                        complaint.status === 'ditolak'
+                          ? 'border-gray-400 bg-gray-400'
+                          : 'border-blue-500 bg-blue-500'
+                      }`}
+                    />
+                    {/* Connecting line */}
+                    <View
+                      className={`h-8 w-0.5 ${
+                        complaint.status === 'ditolak' ? 'bg-gray-300' : 'bg-blue-300'
+                      }`}
+                    />
+                    {/* Second circle - Diproses */}
+                    <View
+                      className={`h-4 w-4 rounded-full border-2 ${
+                        complaint.status === 'menunggu'
+                          ? 'border-gray-300 bg-white'
+                          : complaint.status === 'ditolak'
+                            ? 'border-gray-400 bg-gray-400'
+                            : 'border-blue-500 bg-blue-500'
+                      }`}
+                    />
+                    {/* Connecting line */}
+                    <View
+                      className={`h-8 w-0.5 ${
+                        complaint.status === 'menunggu'
+                          ? 'bg-gray-200'
+                          : complaint.status === 'ditolak'
+                            ? 'bg-gray-300'
+                            : 'bg-blue-300'
+                      }`}
+                    />
+                    {/* Third circle - Selesai/Ditolak */}
+                    <View
+                      className={`h-4 w-4 rounded-full border-2 ${
+                        complaint.status === 'selesai'
+                          ? 'border-green-500 bg-green-500'
+                          : complaint.status === 'ditolak'
+                            ? 'border-gray-400 bg-gray-400'
+                            : 'border-gray-300 bg-white'
+                      }`}
+                    />
+                  </View>
+
+                  {/* Timeline content */}
+                  <View className="flex-1">
+                    {/* Menunggu */}
+                    <View className="mb-6 mt-1">
+                      <Text
+                        className={`text-sm font-medium ${
+                          complaint.status === 'ditolak' ? 'text-gray-500' : 'text-blue-600'
+                        }`}>
+                        Menunggu
+                      </Text>
+                      <Text className="text-xs text-gray-500">Pengaduan telah diterima</Text>
+                    </View>
+
+                    {/* Diproses */}
+                    <View className="mb-6">
+                      <Text
+                        className={`text-sm font-medium ${
+                          complaint.status === 'menunggu'
+                            ? 'text-gray-400'
+                            : complaint.status === 'ditolak'
+                              ? 'text-gray-500'
+                              : 'text-blue-600'
+                        }`}>
+                        Diproses
+                      </Text>
+                      <Text className="text-xs text-gray-500">
+                        {complaint.status === 'menunggu'
+                          ? 'Menunggu untuk diproses'
+                          : 'Pengaduan sedang ditinjau'}
+                      </Text>
+                    </View>
+
+                    {/* Selesai/Ditolak */}
+                    <View>
+                      <Text
+                        className={`text-sm font-medium ${
+                          complaint.status === 'selesai'
+                            ? 'text-green-600'
+                            : complaint.status === 'ditolak'
+                              ? 'text-gray-500'
+                              : 'text-gray-400'
+                        }`}>
+                        {complaint.status === 'ditolak' ? 'Ditolak' : 'Selesai'}
+                      </Text>
+                      <Text className="text-xs text-gray-500">
+                        {complaint.status === 'selesai'
+                          ? 'Pengaduan telah diselesaikan'
+                          : complaint.status === 'ditolak'
+                            ? 'Pengaduan ditolak'
+                            : 'Menunggu penyelesaian'}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+
+                {/* Admin Response */}
+                <View
+                  className={`mt-4 rounded-lg p-3 ${
+                    complaint.status === 'ditolak'
+                      ? 'border border-gray-200 bg-gray-50'
+                      : 'border border-blue-200 bg-blue-50'
+                  }`}>
+                  <Text
+                    className={`mb-1 text-sm font-semibold ${
+                      complaint.status === 'ditolak' ? 'text-gray-700' : 'text-blue-900'
+                    }`}>
+                    Catatan Admin
+                  </Text>
+                  <Text
+                    className={`text-sm ${
+                      complaint.status === 'ditolak' ? 'text-gray-600' : 'text-blue-800'
+                    }`}>
+                    {complaint.response}
+                  </Text>
+                </View>
+              </View>
             </View>
           )}
 
